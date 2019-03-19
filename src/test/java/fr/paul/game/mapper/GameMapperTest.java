@@ -50,6 +50,8 @@ public class GameMapperTest {
         Assert.assertEquals(model.getPlayer2(), entity.getPlayer2());
         Assert.assertEquals(model.getWinner(), entity.getWinner());
 
+        //TODO states
+
     }
 
     /**
@@ -69,6 +71,8 @@ public class GameMapperTest {
         Assert.assertEquals(model.getPlayer1(), entity.getPlayer1());
         Assert.assertEquals(model.getPlayer2(), entity.getPlayer2());
         Assert.assertEquals(model.getWinner(), entity.getWinner());
+
+        //TODO states
 
     }
 
