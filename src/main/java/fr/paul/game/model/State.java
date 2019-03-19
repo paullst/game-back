@@ -1,24 +1,17 @@
-package fr.paul.game.entity;
+package fr.paul.game.model;
 
-import javax.persistence.*;
+import java.util.Map;
 
 /**
- * State Entity
+ * State Model
  */
-@Entity
-@Table(name = "state")
-public class StateEntity {
+public class State {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private Integer moveNo;
+    private Map<String, Country> map;
     private String nextPlayer;
-    private String map;
-
-    @ManyToOne
-    @JoinColumn(name = "game")
-    private GameEntity game;
+    private Game game;
 
     /**
      * Gets id.
@@ -57,6 +50,24 @@ public class StateEntity {
     }
 
     /**
+     * Gets map.
+     *
+     * @return the map
+     */
+    public Map<String, Country> getMap() {
+        return map;
+    }
+
+    /**
+     * Sets map.
+     *
+     * @param map the map
+     */
+    public void setMap(Map<String, Country> map) {
+        this.map = map;
+    }
+
+    /**
      * Gets next player.
      *
      * @return the next player
@@ -75,29 +86,11 @@ public class StateEntity {
     }
 
     /**
-     * Gets map.
-     *
-     * @return the map
-     */
-    public String getMap() {
-        return map;
-    }
-
-    /**
-     * Sets map.
-     *
-     * @param map the map
-     */
-    public void setMap(String map) {
-        this.map = map;
-    }
-
-    /**
      * Gets game.
      *
      * @return the game
      */
-    public GameEntity getGame() {
+    public Game getGame() {
         return game;
     }
 
@@ -106,7 +99,7 @@ public class StateEntity {
      *
      * @param game the game
      */
-    public void setGame(GameEntity game) {
+    public void setGame(Game game) {
         this.game = game;
     }
 }

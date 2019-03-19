@@ -1,26 +1,18 @@
-package fr.paul.game.entity;
+package fr.paul.game.model;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
- * Game Entity
+ * Game Model
  */
-@Entity
-@Table(name = "game")
-public class GameEntity {
+public class Game {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-
     private String player1;
     private String player2;
     private String winner;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "game")
-    private List<StateEntity> states;
+    private List<State> states;
+    private Game game;
 
     /**
      * Gets id.
@@ -99,7 +91,7 @@ public class GameEntity {
      *
      * @return the states
      */
-    public List<StateEntity> getStates() {
+    public List<State> getStates() {
         return states;
     }
 
@@ -108,7 +100,25 @@ public class GameEntity {
      *
      * @param states the states
      */
-    public void setStates(List<StateEntity> states) {
+    public void setStates(List<State> states) {
         this.states = states;
+    }
+
+    /**
+     * Gets game.
+     *
+     * @return the game
+     */
+    public Game getGame() {
+        return game;
+    }
+
+    /**
+     * Sets game.
+     *
+     * @param game the game
+     */
+    public void setGame(Game game) {
+        this.game = game;
     }
 }
