@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Game Service Implementation
@@ -46,6 +47,24 @@ public class GameServiceImpl implements GameService {
         return saveGame(game);
     }
 
+    @Override
+    public Game getGameById(Integer id) {
+
+        Optional<GameEntity> entity = gameRepository.findById(id);
+
+        if (entity.isPresent()) {
+            return gameMapper.mapToModel(entity.get());
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Persist game
+     * @param game
+     * @return game
+     */
     private Game saveGame(Game game) {
 
         GameEntity entity = gameMapper.mapFromModel(game);

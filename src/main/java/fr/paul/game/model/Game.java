@@ -12,7 +12,6 @@ public class Game {
     private String player2;
     private String winner;
     private List<State> states;
-    private Game game;
 
     /**
      * Gets id.
@@ -104,21 +103,4 @@ public class Game {
         this.states = states;
     }
 
-    /**
-     * Gets game.
-     *
-     * @return the game
-     */
-    public Game getGame() {
-        return game;
-    }
-
-    /**
-     * Sets game.
-     *
-     * @param game the game
-     */
-    public void setGame(Game game) {
-        this.game = game;
-    }
 }

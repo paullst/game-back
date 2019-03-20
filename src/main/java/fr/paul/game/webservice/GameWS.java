@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Game Webservice
+ */
 @RestController
 public class GameWS {
 
@@ -43,6 +46,23 @@ public class GameWS {
     public ResponseEntity<Integer> createGame(@RequestParam("player1") String p1, @RequestParam("player2") String p2) {
 
         return new ResponseEntity<Integer>(gameService.createNewGame(p1, p2).getId(), HttpStatus.OK);
+
+    }
+
+
+    /**
+     * Get last state of game
+     * @param id the game id
+     * @return state
+     */
+    @GetMapping("/game/{id}")
+    public ResponseEntity<State> getLastState(@PathVariable("id") String id) {
+
+        List<State> states = gameService
+                .getGameById(Integer.parseInt(id))
+                .getStates();
+
+        return new ResponseEntity<State>(states.get(states.size()-1), HttpStatus.OK);
 
     }
 

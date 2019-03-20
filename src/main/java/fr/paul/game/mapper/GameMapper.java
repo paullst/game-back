@@ -25,18 +25,8 @@ public class GameMapper extends AbstractMapper<GameEntity, Game>{
     public Game mapToModel(GameEntity entity) {
 
         if (Objects.nonNull(entity)) {
-            Game model = new Game();
-            model.setId(entity.getId());
-            model.setPlayer1(entity.getPlayer1());
-            model.setPlayer2(entity.getPlayer2());
-            model.setWinner(entity.getWinner());
-
-            // Remove game from states to avoid recursive issues
-            List<StateEntity> stateEntities = entity.getStates();
-            if (!CollectionUtils.isEmpty(stateEntities)) {
-                stateEntities.stream()
-                        .forEach(s -> s.setGame(null));
-            }
+            Game model = mapToModelNoDependency(entity);
+            model.setStates(stateMapper.mapToModelsNoDependency(entity.getStates()));
 
             return model;
         }
@@ -48,18 +38,40 @@ public class GameMapper extends AbstractMapper<GameEntity, Game>{
     public GameEntity mapFromModel(Game model) {
 
         if (Objects.nonNull(model)) {
+            GameEntity entity = mapFromModelNoDependency(model);
+            entity.setStates(stateMapper.mapFromModelsNoDependency(model.getStates()));
+
+            return entity;
+        }
+
+        return null;
+    }
+
+    @Override
+    public Game mapToModelNoDependency(GameEntity entity) {
+
+        if (Objects.nonNull(entity)) {
+            Game model = new Game();
+            model.setId(entity.getId());
+            model.setPlayer1(entity.getPlayer1());
+            model.setPlayer2(entity.getPlayer2());
+            model.setWinner(entity.getWinner());
+
+            return model;
+        }
+
+        return null;
+    }
+
+    @Override
+    public GameEntity mapFromModelNoDependency(Game model) {
+
+        if (Objects.nonNull(model)) {
             GameEntity entity = new GameEntity();
             entity.setId(model.getId());
             entity.setPlayer1(model.getPlayer1());
             entity.setPlayer2(model.getPlayer2());
             entity.setWinner(model.getWinner());
-
-            // Remove game from states to avoid recursive issues
-            List<State> stateModels = model.getStates();
-            if (!CollectionUtils.isEmpty(stateModels)) {
-                stateModels.stream()
-                        .forEach(s -> s.setGame(null));
-            }
 
             return entity;
         }

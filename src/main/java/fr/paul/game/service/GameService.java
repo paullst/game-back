@@ -13,4 +13,10 @@ public interface GameService {
      */
     Game createNewGame(String player1, String player2);
 
+    /**
+     * Get game by its ID
+     * @param id
+     * @return game
+     */
+    Game getGameById(Integer id);
 }

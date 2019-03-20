@@ -1,9 +1,12 @@
 package fr.paul.game.service.impl;
 
 import fr.paul.game.constant.CountryRef;
+import fr.paul.game.mapper.StateMapper;
 import fr.paul.game.model.Country;
 import fr.paul.game.model.State;
+import fr.paul.game.repository.StateRepository;
 import fr.paul.game.service.StateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,6 +16,12 @@ import java.util.*;
  */
 @Service
 public class StateServiceImpl implements StateService {
+
+    @Autowired
+    private StateMapper stateMapper;
+
+    @Autowired
+    private StateRepository stateRepository;
 
     @Override
     public State makeInitialState(String player1, String player2) {
@@ -25,6 +34,11 @@ public class StateServiceImpl implements StateService {
         state.setNextPlayer(Math.random() > 0.5 ? player1 : player2);
 
         return state;
+    }
+
+    @Override
+    public State saveState(State state) {
+        return stateMapper.mapToModel(stateRepository.save(stateMapper.mapFromModel(state)));
     }
 
 

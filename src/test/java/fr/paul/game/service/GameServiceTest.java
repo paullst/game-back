@@ -62,6 +62,11 @@ public class GameServiceTest {
 
     }
 
+    @Test
+    public void getGameById() {
+        // TODO
+    }
+
     private Game makeMockGame(String player1, String player2) {
 
         Game game = new Game();

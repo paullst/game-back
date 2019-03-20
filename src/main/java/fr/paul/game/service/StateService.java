@@ -14,4 +14,11 @@ public interface StateService {
      * @return first state
      */
     State makeInitialState(String player1, String player2);
+
+    /**
+     * Save state
+     * @param state
+     * @return
+     */
+    State saveState(State state);
 }

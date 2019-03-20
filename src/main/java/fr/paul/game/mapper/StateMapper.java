@@ -31,28 +31,41 @@ public class StateMapper extends AbstractMapper<StateEntity, State> {
 
     @Override
     public State mapToModel(StateEntity entity) {
+
+        if (Objects.nonNull(entity)) {
+            State state = mapToModelNoDependency(entity);
+            state.setGame(gameMapper.mapToModelNoDependency(entity.getGame()));
+            return state;
+        }
+        return null;
+    }
+
+    @Override
+    public StateEntity mapFromModel(State model) {
+
+        if (Objects.nonNull(model)) {
+            StateEntity entity = mapFromModelNoDependency(model);
+            entity.setGame(gameMapper.mapFromModelNoDependency(model.getGame()));
+            return entity;
+        }
+        return null;
+    }
+
+    @Override
+    public State mapToModelNoDependency(StateEntity entity) {
+
         if (Objects.nonNull(entity)) {
             State model = new State();
             model.setId(entity.getId());
             model.setNextPlayer(entity.getNextPlayer());
             model.setMoveNo(entity.getMoveNo());
 
-            // Remove state entities from game entity to avoid recursive issues
-            GameEntity gameEntity = entity.getGame();
-            if (Objects.nonNull(gameEntity)) {
-                gameEntity.setStates(new ArrayList<>());
-                model.setGame(gameMapper.mapToModel(gameEntity));
-            }
-
-            // Country map
-            if (Objects.nonNull(entity.getMap())) {
-                try {
-                    ObjectMapper mapper = new ObjectMapper();
-                    TypeReference<HashMap<String, Country>> typeRef = new TypeReference<HashMap<String, Country>>() {};
-                    model.setMap(mapper.readValue(entity.getMap(), typeRef));
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                }
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                TypeReference<HashMap<String, Country>> typeRef = new TypeReference<HashMap<String, Country>>() {};
+                model.setMap(mapper.readValue(entity.getMap(), typeRef));
+            } catch (IOException e) {
+                logger.error(e.getMessage(),e);
             }
 
             return model;
@@ -63,7 +76,7 @@ public class StateMapper extends AbstractMapper<StateEntity, State> {
     }
 
     @Override
-    public StateEntity mapFromModel(State model) {
+    public StateEntity mapFromModelNoDependency(State model) {
 
         if (Objects.nonNull(model)) {
             StateEntity entity = new StateEntity();
@@ -71,25 +84,15 @@ public class StateMapper extends AbstractMapper<StateEntity, State> {
             entity.setNextPlayer(model.getNextPlayer());
             entity.setMoveNo(model.getMoveNo());
 
-            // Remove states from game to avoid recursive issues
-            Game gameModel = model.getGame();
-            if(Objects.nonNull(gameModel)) {
-                gameModel.setStates(new ArrayList<>());
-                entity.setGame(gameMapper.mapFromModel(gameModel));
-            }
-
-            // Country map
-            if (Objects.nonNull(model.getGame())) {
-                try {
-                    ObjectMapper mapper = new ObjectMapper();
-                    entity.setMap(mapper.writeValueAsString(model.getMap()));
-
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                }
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                entity.setMap(mapper.writeValueAsString(model.getMap()));
+            } catch (IOException e) {
+                logger.error(e.getMessage(),e);
             }
 
             return entity;
+
         }
 
         return null;
