@@ -8,12 +8,15 @@ import fr.paul.game.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Game Webservice
@@ -43,7 +46,11 @@ public class GameWS {
      * @return new game id
      */
     @GetMapping("/new")
-    public ResponseEntity<Integer> createGame(@RequestParam("player1") String p1, @RequestParam("player2") String p2) {
+    public ResponseEntity<?> createGame(@RequestParam("player1") String p1, @RequestParam("player2") String p2) {
+
+        if (Stream.of(p1, p2).anyMatch(StringUtils::isEmpty) || p1.equals(p2)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<Integer>(gameService.createNewGame(p1, p2).getId(), HttpStatus.OK);
 

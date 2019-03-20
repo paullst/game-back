@@ -83,7 +83,7 @@ public class StateServiceImpl implements StateService {
         Country country = new Country();
         country.setId(ref.getId());
         country.setLabel(ref.getLabel());
-        country.setPop(ref.getNeighbors().length * 10);
+        country.setPop((ref.getNeighbors().length >= 4 ? ref.getNeighbors().length : 4) * 10);
 
         return country;
 
