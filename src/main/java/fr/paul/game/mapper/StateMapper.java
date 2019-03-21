@@ -2,19 +2,15 @@ package fr.paul.game.mapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.paul.game.entity.GameEntity;
 import fr.paul.game.entity.StateEntity;
 import fr.paul.game.model.Country;
-import fr.paul.game.model.Game;
 import fr.paul.game.model.State;
-import org.apache.tomcat.util.digester.ArrayStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 

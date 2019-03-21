@@ -1,10 +1,6 @@
 package fr.paul.game.constant;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Enum of countries

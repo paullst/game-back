@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * State Service Implementation
@@ -51,20 +52,24 @@ public class StateServiceImpl implements StateService {
     private Map<String, Country> makeInitialCountryMap(String player1, String player2) {
 
         // Init country map
-        Map<String, Country> map = new HashMap<>();
-        Arrays.asList(CountryRef.values())
+        Map<String, Country> map = Arrays.asList(CountryRef.values())
                 .stream()
-                .forEach(ref -> {
+                .collect(Collectors.toMap(CountryRef::getId, this::makeInitialCountry));
+
+                /* .forEach(ref -> {
                     map.put(ref.getId(), makeInitialCountry(ref));
-                });
+                }); */
 
         // Set origin countries for player
         String isoPlayer1 = getRandomCountry(map);
         String isoPlayer2 = null;
 
-        while (isoPlayer1.equals(isoPlayer2) || Objects.isNull(isoPlayer2)) {
+        while (Objects.isNull(isoPlayer2)
+                        || isoPlayer1.equals(isoPlayer2)) {
             isoPlayer2 = getRandomCountry(map);
         }
+
+        // TODO: check player1 et player2 are NOT adjacent
 
         map.get(isoPlayer1).setOwner(player1);
         map.get(isoPlayer2).setOwner(player2);

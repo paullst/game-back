@@ -1,7 +1,5 @@
 package fr.paul.game.model;
 
-import java.util.Objects;
-
 /**
  * Country Model
  */

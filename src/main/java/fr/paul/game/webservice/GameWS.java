@@ -1,6 +1,5 @@
 package fr.paul.game.webservice;
 
-import fr.paul.game.model.Game;
 import fr.paul.game.model.State;
 import fr.paul.game.repository.GameRepository;
 import fr.paul.game.service.GameService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**

@@ -1,15 +1,10 @@
 package fr.paul.game.mapper;
 
 import fr.paul.game.entity.GameEntity;
-import fr.paul.game.entity.StateEntity;
 import fr.paul.game.model.Game;
-import fr.paul.game.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 /**
